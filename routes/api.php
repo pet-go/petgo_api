@@ -1,7 +1,7 @@
 <?php
 
 use App\Http\Middleware\JwtMiddleware;
-use Illuminate\Http\Request;
+use App\Modules\Clientes\Controllers\ClientesController;
 use Illuminate\Support\Facades\Route;
 
 Route::middleware(JwtMiddleware::class)
@@ -11,3 +11,4 @@ Route::middleware(JwtMiddleware::class)
             return 'Home';
         });
     });
+Route::get('clientes',[ClientesController::class,'index']);
