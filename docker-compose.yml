@@ -1,11 +1,11 @@
 services:
-    laravel.test:
+    pet.go:
         build:
             context: ./vendor/laravel/sail/runtimes/8.3
             dockerfile: Dockerfile
             args:
                 WWWGROUP: '${WWWGROUP}'
-        image: sail-8.3/app
+        image: pet-go/app
         extra_hosts:
             - 'host.docker.internal:host-gateway'
         ports:
