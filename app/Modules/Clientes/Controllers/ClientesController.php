@@ -4,7 +4,9 @@ declare(strict_types=1);
 namespace App\Modules\Clientes\Controllers;
 
 use App\Modules\Clientes\Services\BuscarCliente;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 
 class ClientesController
 {
@@ -15,8 +17,11 @@ class ClientesController
         
     }
 
-    public function index(Request $request)
+    public function index(Request $request): JsonResponse
     {
-        return $this->servicoBuscar->pesquisar($request);
+        return response()->json(
+            $this->servicoBuscar->pesquisar($request),
+            Response::HTTP_OK
+        );
     }
 }
