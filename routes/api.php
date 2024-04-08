@@ -7,8 +7,17 @@ use Illuminate\Support\Facades\Route;
 Route::middleware(JwtMiddleware::class)
     ->prefix('v1')
     ->group(function ($router) {
-        $router->get('/', function() {
+        $router->get('/', function () {
             return 'Home';
         });
     });
-Route::get('clientes',[ClientesController::class,'index']);
+
+Route::prefix('v1')->group(
+    function ($router) {
+        $router->controller(ClientesController::class)->group(
+            function ($cliente) {
+                $cliente->get('clientes', 'index');
+            }
+        );
+    }
+);

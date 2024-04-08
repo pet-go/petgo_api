@@ -20,7 +20,9 @@ class ClienteRepository implements ClienteContract
     {
         try {
             $dados = $clientes
-                ->orderBy($ordenacao->ordenar_por, $ordenacao->sentido)
+                ->orderBy(
+                    $ordenacao->ordenar_por, 
+                    $ordenacao->sentido)
                 ->paginate(
                     perPage: $ordenacao->per_page,
                     columns: ['*'],
