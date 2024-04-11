@@ -2,6 +2,8 @@
 
 namespace App\Modules\Pets\Pipelines;
 
+use App\Modules\Filtros\FiltrarDataDeNascimento;
+use App\Modules\Filtros\FiltrarEstirpe;
 use App\Modules\Filtros\FiltrarId;
 use App\Modules\Filtros\FiltrarNome;
 use App\Modules\Filtros\FiltrarTermoDePesquisa;
@@ -22,7 +24,8 @@ class PesquisarPet
             ->through([
                 FiltrarId::class,
                 FiltrarNome::class,
-                FiltrarTermoDePesquisa::class
+                FiltrarTermoDePesquisa::class,
+                FiltrarDataDeNascimento::class
             ])->thenReturn();
     }
 }
