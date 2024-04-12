@@ -16,7 +16,7 @@ class ClienteRepository implements ClienteContract
      * @param object $ordenacao
      * @return array
      */
-    public function index(Builder $clientes, object $ordenacao): array
+    public function index(Builder $clientes, object $ordenacao)//: array
     {
         try {
             $dados = $clientes
