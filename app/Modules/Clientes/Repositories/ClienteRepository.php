@@ -16,11 +16,13 @@ class ClienteRepository implements ClienteContract
      * @param object $ordenacao
      * @return array
      */
-    public function index(Builder $clientes, object $ordenacao): array
+    public function index(Builder $clientes, object $ordenacao)//: array
     {
         try {
             $dados = $clientes
-                ->orderBy($ordenacao->ordenar_por, $ordenacao->sentido)
+                ->orderBy(
+                    $ordenacao->ordenar_por, 
+                    $ordenacao->sentido)
                 ->paginate(
                     perPage: $ordenacao->per_page,
                     columns: ['*'],

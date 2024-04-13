@@ -1,7 +1,8 @@
 <?php
+
 declare(strict_types=1);
 
-namespace App\Modules\Clientes\Filtros\Clientes;
+namespace App\Modules\Filtros;
 
 use Closure;
 use Illuminate\Database\Eloquent\Builder;
@@ -11,19 +12,20 @@ class FiltrarNome
 {
     public function __construct(protected Request $request)
     {}
+
     /**
-     * Filtra o cliente pelo nome, caso esse parâmetros seja enviado.
+     * Aplica o filtro nome, caso esse parâmetros seja enviado.
      * 
      * @param Request $request
      * @param Closure $next
      * 
      * @return Closure
      */
-    public function handle(Builder $builder, Closure $next)
+    public function handle(Builder $builder, Closure $next): Builder
     {
         return $next($builder)
             ->when(
-                $this->request->has('nome'),
+                $this->request->filled('nome'),
                 fn (Builder $query) => $query->where('nome', 'REGEXP', $this->request->nome)
             );
     }

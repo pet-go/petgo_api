@@ -2,18 +2,19 @@
 
 declare(strict_types=1);
 
-namespace App\Modules\Clientes\Filtros\Clientes;
+namespace App\Modules\Filtros;
 
 use Closure;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 
-class FiltrarId
+class FiltrarDataDeNascimento
 {
     public function __construct(protected Request $request)
     {}
+
     /**
-     * Filtra o cliente pelo código, caso esse parâmetros seja enviado.
+     * Aplica o filtro data de nascimento, caso esse parâmetros seja enviado.
      * 
      * @param Request $request
      * @param Closure $next
@@ -24,8 +25,8 @@ class FiltrarId
     {
         return $next($builder)
             ->when(
-                $this->request->has('codigo'),
-                fn (Builder $query) => $query->where('id', $this->request->codigo)
+                $this->request->filled('data_de_nascimento'),
+                fn (Builder $query) => $query->where('data_de_nascimento', 'REGEXP', $this->request->data_de_nascimento)
             );
     }
 }

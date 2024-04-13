@@ -22,7 +22,7 @@ class BuscarCliente
      * @param Request $request
      * @return array
      */
-    public function pesquisar(Request $request): array
+    public function pesquisar(Request $request)//: array
     {
         $ordenacao = (object) [
             'per_page' => $request->input('per_page') ?? 10,
