@@ -33,7 +33,7 @@ jobs:
     - name: Execute tests (Unit and Feature tests) using PHPUnit
       env:
         DB_PORT: ${{ job.services.mysql.ports[3306] }}
-      run: ./vendor/bin/phpunit
+      run: php artisan test
  
     - name: Run Testsuite
       run: vendor/bin/phpunit tests/
