@@ -15,6 +15,10 @@ class PetCollection extends JsonResource
         return [
             'codigo' => $this->id,
             'nome' => $this->nome,
+            'cliente_id' => $this->cliente->id,
+            'cliente' => $this->cliente->nome,
+            'estirpe_id' => $this->estirpe->id,
+            'estirpe' => $this->estirpe->nome,
             'data_de_nascimento' => Carbon::parse($this->data_de_nascimento)->format('Y-m-d'),
             'criado_em' => Carbon::parse($this->created_at)->format('Y-m-d h:i:s'),
             'ult.atualizacao' => Carbon::parse($this->updated_at)->format('Y-m-d h:i:s'),

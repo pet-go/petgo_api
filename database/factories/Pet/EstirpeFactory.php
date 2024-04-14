@@ -18,7 +18,7 @@ class EstirpeFactory extends Factory
     public function definition(): array
     {
         return [
-            'nome' => fake()->nome,
+            'nome' => fake()->name(),
             'especie_id' => Especie::factory()->lazy()
         ];
     }

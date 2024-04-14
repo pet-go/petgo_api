@@ -17,7 +17,7 @@ class PesquisarPet
      * @param Builder $pets
      * @return Builder
      */
-    public function handle(Builder $pets): Builder
+    public function execute(Builder $pets): Builder
     {
         return (new Pipeline(app()))
             ->send($pets)
