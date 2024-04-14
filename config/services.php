@@ -31,4 +31,9 @@ return [
         ],
     ],
 
+    'translator' => [
+        'url' => env('TRANSLATOR_URL'),
+        'key' => env('TRANSLATOR_KEY')
+    ]
+
 ];

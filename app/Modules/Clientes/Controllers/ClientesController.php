@@ -1,27 +1,20 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\Modules\Clientes\Controllers;
 
+use App\Models\Cliente\Cliente;
 use App\Modules\Clientes\Services\BuscarCliente;
-use Illuminate\Http\JsonResponse;
-use Illuminate\Http\Request;
-use Illuminate\Http\Response;
+use App\Traits\CrudControllerTrait;
 
 class ClientesController
 {
-    public function __construct(
-        private BuscarCliente $servicoBuscar
-        )
-    {
-        
-    }
+    use CrudControllerTrait;
 
-    public function index(Request $request): JsonResponse
-    {
-        return response()->json(
-            $this->servicoBuscar->pesquisar($request),
-            Response::HTTP_OK
-        );
+    public function __construct(
+        private readonly BuscarCliente $servicoBuscar,
+        private readonly Cliente $model
+    ) {
     }
 }

@@ -7,7 +7,7 @@ use App\Models\Pet\Estirpe;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Pet>
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Pet\Pet>
  */
 class PetFactory extends Factory
 {
@@ -19,9 +19,9 @@ class PetFactory extends Factory
     public function definition(): array
     {
         return [
-            'nome' => fake()->name(),
+            'nome' => $this->faker->name,
             'cliente_id' => Cliente::factory()->lazy(),
-            'estirpe' => Estirpe::factory()->lazy(),
+            'estirpe_id' => Estirpe::factory()->lazy(),
             'data_de_nascimento' => fake()->date()
         ];
     }
