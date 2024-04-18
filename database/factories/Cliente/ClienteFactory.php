@@ -27,8 +27,8 @@ class ClienteFactory extends Factory
             'data_de_nascimento' => $this->faker->date(),
             'genero' => $this->faker->randomElement(TipoDeGeneroEnum::obterValores()),
             'dados_adicionais' => [
-                'cpf' => $this->faker->randomNumber(11),
-                'rg' => $this->faker->randomNumber(11)  
+                'cpf' => $this->faker->randomNumber(5),
+                'rg' => $this->faker->randomNumber(5)  
             ]
         ];
     }
