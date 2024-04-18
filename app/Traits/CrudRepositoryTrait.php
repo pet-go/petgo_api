@@ -7,6 +7,7 @@ use Exception;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Str;
 use Illuminate\Pagination\LengthAwarePaginator;
+use Illuminate\Validation\ValidationException;
 use Symfony\Component\HttpFoundation\Response;
 
 trait CrudRepositoryTrait
@@ -56,14 +57,19 @@ trait CrudRepositoryTrait
     public function cadastrar(array $dados): array
     {
         try {
+            $dados = app($this->validations)->validator(dados: $dados);
             $resource = app($this->modelo)->create($dados);
             $dados = [
                 'status' => Response::HTTP_CREATED,
                 'dados' => new $this->resourceCollection($resource)
             ];
             return $dados;
-        } catch (Exception $ex) {
-            return $this->returnException(exception: $ex);
+        } catch (ValidationException $ex) {
+            return [
+                'status' => Response::HTTP_UNPROCESSABLE_ENTITY,
+                'message' => $ex->getMessage(),
+                'errors' => $ex->validator->errors()
+            ];
         }
     }
 
@@ -75,8 +81,8 @@ trait CrudRepositoryTrait
     {
         return [
             'status' => $exception->getCode() == 0 ? Response::HTTP_INTERNAL_SERVER_ERROR : $exception->getCode(),
-            'error' => $exception->getMessage(),
-            'log' => DeepLangService::fixLang(
+            'message' => $exception->getMessage(),
+            'errors' => DeepLangService::fixLang(
                 'Something went wrong!',
                 $exception->getMessage()
             )

@@ -6,6 +6,7 @@ namespace App\Modules\Clientes\Controllers;
 
 use App\Models\Cliente\Cliente;
 use App\Modules\Clientes\Services\ClienteService;
+use App\Modules\Clientes\Validations\ClienteValidation;
 use App\Traits\CrudControllerTrait;
 
 class ClientesController
