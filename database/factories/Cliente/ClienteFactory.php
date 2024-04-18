@@ -2,14 +2,17 @@
 
 namespace Database\Factories\Cliente;
 
+use App\Models\Cliente\Cliente;
+use App\Modules\Clientes\Enums\TipoDeGeneroEnum;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Str;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Model>
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Cliente\Cliente>
  */
 class ClienteFactory extends Factory
 {
+    protected $model = Cliente::class;
     /**
      * Define the model's default state.
      *
@@ -17,15 +20,15 @@ class ClienteFactory extends Factory
      */
     public function definition(): array
     {
-        $nome = fake()->name();
+        $nome = $this->faker->name;
         return [
             'nome' => $nome,
             'nm_reduzido' => Str::substr($nome, 0, 10),
-            'data_de_nascimento' => fake()->date(),
-            'genero' => fake()->randomElement(['Masculino', 'Feminino', 'Outro']),
+            'data_de_nascimento' => $this->faker->date(),
+            'genero' => $this->faker->randomElement(TipoDeGeneroEnum::obterValores()),
             'dados_adicionais' => [
-                'cpf' => fake()->randomDigit(11),
-                'rg' => fake()->randomDigit(14)
+                'cpf' => $this->faker->randomNumber(11),
+                'rg' => $this->faker->randomNumber(11)  
             ]
         ];
     }

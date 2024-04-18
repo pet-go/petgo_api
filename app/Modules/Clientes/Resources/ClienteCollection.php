@@ -22,6 +22,7 @@ class ClienteCollection extends JsonResource
             'genero' => $this->genero,
             'criado_em' => Carbon::parse($this->created_at)->format('Y-m-d h:i:s'),
             'ult_atualizacao' => Carbon::parse($this->updated_at)->format('Y-m-d h:i:s'),
+            'dados_adicionais' => $this->dados_adicionais,
         ];
     }
 }

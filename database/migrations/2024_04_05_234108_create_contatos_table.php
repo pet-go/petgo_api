@@ -16,7 +16,7 @@ return new class extends Migration
         Schema::create('contatos', function (Blueprint $table) {
             $table->id()->comment('Identificador único da tabela contatos');
             $table->foreignIdFor(Cliente::class)->comment('Identificador do cliente');
-            $table->enum('tipo_de_contato',TipoDeContatoEnum::allValues())->comment('Tipo de contato(e-mail,telefone)');
+            $table->enum('tipo_de_contato',TipoDeContatoEnum::obterValores())->comment('Tipo de contato(e-mail,telefone)');
             $table->boolean('principal')
                 ->comment('Define se é o principal contato do cliente')
                 ->default(false);

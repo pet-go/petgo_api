@@ -5,10 +5,11 @@ declare(strict_types=1);
 namespace App\Modules\Clientes\Services;
 
 use App\Modules\Clientes\Pipelines\PesquisarCliente;
-use App\Modules\Clientes\Repositories\ClienteRepository;
+use App\Modules\Clientes\Repositories\BuscarClienteRepository;
+use App\Modules\Clientes\Repositories\CadastrarClienteRepository;
 use App\Traits\CrudServiceTrait;
 
-class BuscarCliente
+class ClienteService
 {
     use CrudServiceTrait;
 
@@ -16,7 +17,8 @@ class BuscarCliente
     protected mixed $pesquisaPipeline = PesquisarCliente::class;
 
     public function __construct(
-        private readonly ClienteRepository $repository
+        private readonly BuscarClienteRepository $buscarRepository,
+        private readonly CadastrarClienteRepository $cadastrarRepository
     ) {
     }
 }
