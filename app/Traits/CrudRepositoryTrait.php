@@ -3,17 +3,17 @@
 namespace App\Traits;
 
 use App\Integration\Services\DeepLangService;
+use Exception;
 use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Http\Response;
 use Illuminate\Support\Str;
 use Illuminate\Pagination\LengthAwarePaginator;
+use Illuminate\Validation\ValidationException;
+use Symfony\Component\HttpFoundation\Response;
 
 trait CrudRepositoryTrait
 {
     /**
-     * @param Builder $pet
-     * @param object $ordenacoes
-     * @return array
+     * @inheritDoc
      */
     public function index(Builder $resource, object $ordenacoes): array
     {
@@ -25,22 +25,19 @@ trait CrudRepositoryTrait
                 )->paginate(
                     perPage: $ordenacoes->per_page,
                     columns: ['*'],
-                    pageName: $resource,
+                    pageName: 'principal',
                     page: $ordenacoes->page
                 );
             return $this->formatarPaginacao(paginacao: $dados);
-        } catch (\Exception $ex) {
-            return [
-                'status' => $ex->getCode() == 0 ? Response::HTTP_INTERNAL_SERVER_ERROR : $ex->getCode(),
-                'error' => $ex->getMessage(),
-                'log' => DeepLangService::fixLang(
-                    'Something went wrong!',
-                    $ex->getMessage()
-                )
-            ];
+        } catch (Exception $ex) {
+            return $this->returnException(exception: $ex);
         }
     }
-    
+
+    /**
+     * @param LengthAwarePaginator $paginacao
+     * @return array<mixed>
+     */
     private function formatarPaginacao(LengthAwarePaginator $paginacao): array
     {
         return [
@@ -50,7 +47,45 @@ trait CrudRepositoryTrait
             'ultima_pagina' => $paginacao->lastPage(),
             'primeira_pagina' => $paginacao->onFirstPage(),
             'total' => $paginacao->total(),
-            'dados' => Str::replace('::class','',$this->resourceCollection)::collection($paginacao->items())
+            'dados' => Str::replace('::class', '', $this->resourceCollection)::collection($paginacao->items())
+        ];
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function cadastrar(array $dados): array
+    {
+        try {
+            $dados = app($this->validations)->validator(dados: $dados);
+            $resource = app($this->modelo)->create($dados);
+            $dados = [
+                'status' => Response::HTTP_CREATED,
+                'dados' => new $this->resourceCollection($resource)
+            ];
+            return $dados;
+        } catch (ValidationException $ex) {
+            return [
+                'status' => Response::HTTP_UNPROCESSABLE_ENTITY,
+                'message' => $ex->getMessage(),
+                'errors' => $ex->validator->errors()
+            ];
+        }
+    }
+
+    /**
+     * @throws Exception $ex
+     * @return array<mixed>
+     */
+    private function returnException(Exception $exception): array
+    {
+        return [
+            'status' => $exception->getCode() == 0 ? Response::HTTP_INTERNAL_SERVER_ERROR : $exception->getCode(),
+            'message' => $exception->getMessage(),
+            'errors' => DeepLangService::fixLang(
+                'Something went wrong!',
+                $exception->getMessage()
+            )
         ];
     }
 }

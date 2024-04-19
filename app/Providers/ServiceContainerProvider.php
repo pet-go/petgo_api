@@ -2,8 +2,9 @@
 
 namespace App\Providers;
 
-use App\Modules\Clientes\Contracts\ClienteContract;
-use App\Modules\Clientes\Services\BuscarCliente;
+use App\Modules\Clientes\Contracts\BuscarClienteContract;
+use App\Modules\Clientes\Contracts\CadastrarClienteContrat;
+use App\Modules\Clientes\Services\ClienteService;
 use Illuminate\Support\ServiceProvider;
 
 class ServiceContainerProvider extends ServiceProvider
@@ -13,9 +14,10 @@ class ServiceContainerProvider extends ServiceProvider
      */
     public function register(): void
     {
-        $this->app->bind(BuscarCliente::class, function ($app) {
-            return new BuscarCliente(
-                $app->make(ClienteContract::class)
+        $this->app->bind(ClienteService::class, function ($app) {
+            return new ClienteService(
+                $app->make(BuscarClienteContract::class),
+                $app->make(CadastrarClienteContrat::class)
             );
         });
     }

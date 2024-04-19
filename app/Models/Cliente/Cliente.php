@@ -2,6 +2,7 @@
 
 namespace App\Models\Cliente;
 
+use App\Modules\Clientes\Enums\TipoDeGeneroEnum;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -30,7 +31,8 @@ class Cliente extends Model
         return [
             'nome' => 'string',
             'nm_reduzido' => 'string',
-            'dados_adicionais' => 'json'
+            'dados_adicionais' => 'json',
+            'genero' => TipoDeGeneroEnum::class,
         ];
     }
 }

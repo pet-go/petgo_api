@@ -4,6 +4,8 @@ namespace App\Traits;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
+use Illuminate\Http\Resources\Json\JsonResource;
+use Illuminate\Pipeline\Pipeline;
 
 trait CrudServiceTrait
 {
@@ -22,6 +24,22 @@ trait CrudServiceTrait
             'sentido' => $request->input('direcao') ?? 'asc'
         ];
         $resource = app($this->pesquisaPipeline)->execute($model::query());
-        return $this->repository->index(resource: $resource, ordenacoes: $ordenacao);
+        return $this->buscarRepository->index(resource: $resource, ordenacoes: $ordenacao);
+    }
+
+    /**
+     * Serviço retorna o registro cadastrado.
+     * 
+     * @param array $dados
+     * @return JsonResource
+     */
+    public function adicionar(array $dados, array $pipelines = [])
+    {
+        return (new Pipeline(app()))
+            ->send($dados)
+            ->through($pipelines)
+            ->then(function (array $dados) {
+                return $this->cadastrarRepository->cadastrar(dados:$dados);
+            });
     }
 }
