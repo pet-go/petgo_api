@@ -43,6 +43,13 @@ class CadastrarClienteTest extends TestCase
         ]);
     }
 
+    /**
+     * Testa se o serviço falha ao tentar cadastrar cliente utilizando
+     * o campo genêro incorretamente.
+     * 
+     * @return void
+     * @throws ValidationException
+     */
     public function testDeveFalharAoTentarCadastrarGeneroIncorreto(): void
     {
         $nome = $this->faker->name();
