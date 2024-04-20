@@ -21,7 +21,7 @@ class PetsControllerTest extends TestCase
             ->assertJsonStructure([
                 'dados' =>  [
                     '*' => [
-                        'codigo',
+                        'id',
                         'nome',
                         'cliente_id',
                         'cliente',

@@ -6,5 +6,9 @@ use Illuminate\Database\Eloquent\Builder;
 
 interface BuscarClienteContract
 {
-    public function index(Builder $resource, object $ordenacoes);
+    /**
+     * @param Builder $resource
+     * @param $ordenacoes
+     */
+    public function index(Builder $resource, object $ordenacoes):array;
 }

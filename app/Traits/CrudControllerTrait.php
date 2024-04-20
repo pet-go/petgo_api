@@ -5,8 +5,6 @@ namespace App\Traits;
 use Exception;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Validator;
-use Illuminate\Validation\ValidationException;
 
 trait CrudControllerTrait
 {
@@ -24,6 +22,12 @@ trait CrudControllerTrait
         return response()->json($resource, data_get($resource, 'status'));
     }
 
+    /**
+     * Cadastra novo objeto
+     * 
+     * @param Request $request
+     * @return JsonResponse
+     */
     public function store(Request $request): JsonResponse
     {
         $resource = $this->servico->adicionar(dados: $request->all());

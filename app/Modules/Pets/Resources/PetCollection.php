@@ -13,7 +13,7 @@ class PetCollection extends JsonResource
     public function toArray(Request $request): array
     {
         return [
-            'codigo' => $this->id,
+            'id' => $this->id,
             'nome' => $this->nome,
             'cliente_id' => $this->cliente->id,
             'cliente' => $this->cliente->nome,
