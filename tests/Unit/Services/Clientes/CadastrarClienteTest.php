@@ -2,9 +2,9 @@
 
 namespace Tests\Unit\Services\Clientes;
 
-use App\Models\Cliente\Cliente;
 use App\Modules\Clientes\Enums\TipoDeGeneroEnum;
 use App\Modules\Clientes\Services\ClienteService;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Validation\ValidationException;
 use Illuminate\Support\Str;
@@ -13,7 +13,7 @@ use Tests\TestCase;
 
 class CadastrarClienteTest extends TestCase
 {
-    use WithFaker;
+    use WithFaker, RefreshDatabase;
     /**
      * Testa o serviço de cadastrar clientes
      * @return void
