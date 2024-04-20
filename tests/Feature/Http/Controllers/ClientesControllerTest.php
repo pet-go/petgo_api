@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Unit\Http\Controller;
+namespace Tests\Feature\Http\Controllers;
 
 use App\Models\Cliente\Cliente;
 use App\Modules\Clientes\Enums\TipoDeGeneroEnum;

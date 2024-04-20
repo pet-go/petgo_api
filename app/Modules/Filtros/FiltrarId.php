@@ -25,8 +25,8 @@ class FiltrarId
     {
         return $next($builder)
             ->when(
-                $this->request->filled('codigo'),
-                fn (Builder $query) => $query->where('id', $this->request->codigo)
+                $this->request->route('id'),
+                fn (Builder $query) => $query->where('id', $this->request->route('id'))
             );
     }
 }

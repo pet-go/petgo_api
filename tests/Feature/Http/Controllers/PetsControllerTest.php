@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Unit\Http\Controller;
+namespace Tests\Feature\Http\Controllers;
 
 use App\Models\Pet\Pet;
 use Illuminate\Foundation\Testing\RefreshDatabase;
