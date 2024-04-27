@@ -3,19 +3,17 @@
 namespace App\Modules\Pets\Contracts;
 
 use Exception;
-use Illuminate\Database\Query\Builder;
-use Illuminate\Http\Resources\Json\JsonResource;
+use Illuminate\Database\Eloquent\Model;
 
 interface RemoverPetContract
 {
     /**
      * Exclui o registro pet
      * 
-     * @param int $id
-     * @param Builder $pet
-     * @return JsonResource
+     * @param Model $pet
+     * @return array
      * 
      * @throws Exception
      */
-    public function remover(int $id, Builder $pet): JsonResource;
+    public function remover(Model $pet): array;
 }

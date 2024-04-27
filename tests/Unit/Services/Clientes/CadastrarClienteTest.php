@@ -5,7 +5,6 @@ namespace Tests\Unit\Services\Clientes;
 use App\Models\Cliente\Cliente;
 use App\Modules\Clientes\Enums\TipoDeGeneroEnum;
 use App\Modules\Clientes\Services\ClienteService;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Validation\ValidationException;
