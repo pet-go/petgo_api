@@ -10,6 +10,7 @@ use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
 use Illuminate\Support\Str;
 use Illuminate\Validation\ValidationException;
+use Symfony\Component\HttpFoundation\Response;
 
 class ClientesControllerTest extends TestCase
 {
@@ -25,7 +26,7 @@ class ClientesControllerTest extends TestCase
     {
         Cliente::factory()->count(10)->create();
         $response = $this->getJson('/api/v1/clientes');
-        $response->assertStatus(200)
+        $response->assertStatus(Response::HTTP_OK)
             ->assertJsonStructure([
                 'dados' =>  [
                     '*' => [

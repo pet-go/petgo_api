@@ -5,14 +5,14 @@ declare(strict_types= 1);
 namespace App\Modules\Clientes\Validations;
 
 use App\Modules\Clientes\Enums\TipoDeGeneroEnum;
-use Illuminate\Http\Request;
+use App\Modules\Validations\BaseValidation;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
 
-class ClienteValidation
+class ClienteValidation implements BaseValidation
 {
     /**
-     * @param Request $request
+     * @inheritDoc
      */
     public function validator(array $dados): array
     {

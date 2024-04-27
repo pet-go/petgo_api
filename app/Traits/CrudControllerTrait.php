@@ -41,10 +41,9 @@ trait CrudControllerTrait
      * @param Model|int $id
      * @return JsonResponse
      */
-    public function show(Model|int $id): JsonResponse
+    public function show(): JsonResponse
     {
-        $modelo = $this->modelo->find($id);
-        $resource = $this->servico->exibir($modelo);
+        $resource = $this->servico->exibir($this->modelo);
         return response()->json($resource, data_get($resource, 'status'));
     }
 }

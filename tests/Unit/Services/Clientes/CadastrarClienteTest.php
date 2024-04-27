@@ -2,8 +2,10 @@
 
 namespace Tests\Unit\Services\Clientes;
 
+use App\Models\Cliente\Cliente;
 use App\Modules\Clientes\Enums\TipoDeGeneroEnum;
 use App\Modules\Clientes\Services\ClienteService;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Validation\ValidationException;
@@ -14,6 +16,9 @@ use Tests\TestCase;
 class CadastrarClienteTest extends TestCase
 {
     use WithFaker, RefreshDatabase;
+
+    protected mixed $modelo = Cliente::class;
+
     /**
      * Testa o serviço de cadastrar clientes
      * @return void
@@ -33,7 +38,7 @@ class CadastrarClienteTest extends TestCase
                 'rg' => $this->faker->randomNumber(5)
             ],
         ];
-        $cliente = app(ClienteService::class)->adicionar($dados);
+        $cliente = app(ClienteService::class)->adicionar($dados, app($this->modelo));
         $this->assertEquals(data_get($cliente,'status'),Response::HTTP_CREATED);
         $dadosDoCliente = $cliente['dados']->toArray(request());
         $this->assertArrayIsEqualToArrayOnlyConsideringListOfKeys($dadosDoCliente, $dados,[
@@ -63,7 +68,7 @@ class CadastrarClienteTest extends TestCase
                 'rg' => $this->faker->randomNumber(5)
             ],
         ];
-        $validations = app(ClienteService::class)->adicionar($dados);
+        $validations = app(ClienteService::class)->adicionar($dados, app($this->modelo));
         $this->assertEquals(data_get($validations,'status'),Response::HTTP_UNPROCESSABLE_ENTITY);
         $this->assertEquals(data_get($validations,'message'),"O campo genero selecionado é inválido.");
        

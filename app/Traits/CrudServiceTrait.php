@@ -37,16 +37,16 @@ trait CrudServiceTrait
      * Serviço retorna o registro cadastrado.
      * 
      * @param array $dados
-     * @param array<string> $pipelines
      * @param Model $modelo
+     * @param array<string> $pipelines
      * 
-     * @return JsonResource
+     * @return array
      */
     public function adicionar(
         array $dados,
+        Model $modelo,
         array $pipelines = [],
-        Model $modelo
-    ): JsonResource {
+    ): array {
         return (new Pipeline(app()))
             ->send($dados)
             ->through($pipelines)
@@ -56,7 +56,6 @@ trait CrudServiceTrait
     }
 
     /**
-     * @param int $id
      * @param Model $model
      * @return array
      * 

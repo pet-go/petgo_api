@@ -11,6 +11,8 @@ use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Validation\ValidationException;
 use Symfony\Component\HttpFoundation\Response;
 
+use function PHPUnit\Framework\throwException;
+
 trait CrudRepositoryTrait
 {
     /**
@@ -34,7 +36,6 @@ trait CrudRepositoryTrait
             return $this->returnException(exception: $ex);
         }
     }
-
 
     /**
      * @inheritDoc
@@ -61,9 +62,12 @@ trait CrudRepositoryTrait
     /**
      * @inheritDoc
      */
-    public function exibir(Model $modelo): array
+    public function exibir(?Model $modelo): array
     {
         try {
+            if (!($modelo instanceof Model) || !$modelo) {
+                throw new Exception("Record not found. Please, try to inform a valid model",404);
+            }
             $dados = [
                 'status' => Response::HTTP_OK,
                 'dados' => new $this->resourceCollection($modelo)
