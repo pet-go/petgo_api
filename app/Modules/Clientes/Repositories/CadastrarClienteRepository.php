@@ -13,8 +13,7 @@ use App\Traits\CrudRepositoryTrait;
 class CadastrarClienteRepository implements CadastrarClienteContrat
 {
     use CrudRepositoryTrait;
-
-    protected mixed $modelo = Cliente::class;
+    
     protected mixed $resourceCollection = ClienteCollection::class;
     protected mixed $validations = ClienteValidation::class;
 }

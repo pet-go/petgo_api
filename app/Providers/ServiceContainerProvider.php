@@ -6,6 +6,7 @@ use App\Modules\Clientes\Contracts\BuscarClienteContract;
 use App\Modules\Clientes\Contracts\CadastrarClienteContrat;
 use App\Modules\Clientes\Services\ClienteService;
 use App\Modules\Pets\Contracts\BuscarPetContract;
+use App\Modules\Pets\Contracts\ExibirPetContract;
 use App\Modules\Pets\Services\PetService;
 use Illuminate\Support\ServiceProvider;
 
@@ -25,6 +26,7 @@ class ServiceContainerProvider extends ServiceProvider
         $this->app->bind(PetService::class, function ($app) {
             return new PetService(
                 $app->make(BuscarPetContract::class),
+                $app->make(ExibirPetContract::class)
             );
         });
     }

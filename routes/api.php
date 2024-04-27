@@ -13,14 +13,18 @@ Route::middleware(JwtMiddleware::class)
         });
     });
 
-Route::prefix('v1')->group(function ($router) {
-        $router->controller(ClientesController::class)->group(function ($cliente) {
+Route::prefix('v1')->group(
+    function ($router) {
+        $router->controller(ClientesController::class)->group(
+            function ($cliente) {
                 $cliente->get('clientes', 'index');
                 $cliente->post('clientes', 'store');
             }
         );
-        $router->controller(PetsController::class)->group(function ($pet) {
-            $pet->get('pets', 'index');
+        $router->controller(PetsController::class)->group(
+            function ($pet) {
+                $pet->get('pets', 'index');
+                $pet->get('pets/{id}', 'show');
         });
     }
 );

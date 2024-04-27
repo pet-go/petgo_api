@@ -2,6 +2,10 @@
 
 namespace App\Traits;
 
+use App\Models\Pet\Pet;
+use App\Modules\Filtros\FiltrarId;
+use Exception;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
@@ -15,8 +19,10 @@ trait CrudServiceTrait
      * @param Request $request
      * @return array
      */
-    public function pesquisar(Request $request, Model $model): array
-    {
+    public function pesquisar(
+        Request $request,
+        Model $model
+    ): array {
         $ordenacao = (object) [
             'per_page' => $request->input('per_page') ?? 10,
             'page' => $request->input('page') ?? 1,
@@ -31,15 +37,41 @@ trait CrudServiceTrait
      * Serviço retorna o registro cadastrado.
      * 
      * @param array $dados
+     * @param array<string> $pipelines
+     * @param Model $modelo
+     * 
      * @return JsonResource
      */
-    public function adicionar(array $dados, array $pipelines = [])
-    {
+    public function adicionar(
+        array $dados,
+        array $pipelines = [],
+        Model $modelo
+    ): JsonResource {
         return (new Pipeline(app()))
             ->send($dados)
             ->through($pipelines)
-            ->then(function (array $dados) {
-                return $this->cadastrarRepository->cadastrar(dados:$dados);
+            ->then(function (array $dados) use ($modelo) {
+                return $this->cadastrarRepository->cadastrar(dados: $dados, modelo: $modelo);
             });
+    }
+
+    /**
+     * @param int $id
+     * @param Model $model
+     * @return array
+     * 
+     * @throws Exception
+     */
+    public function exibir(
+        Model $model
+    ): array {
+        $modelo = (new Pipeline(app()))
+            ->send($model::query())
+            ->through([
+                FiltrarId::class,
+            ])
+            ->thenReturn()
+            ->first();
+        return $this->exibirRepository->exibir($modelo);
     }
 }

@@ -5,6 +5,7 @@ namespace App\Traits;
 use App\Integration\Services\DeepLangService;
 use Exception;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Str;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Validation\ValidationException;
@@ -34,31 +35,15 @@ trait CrudRepositoryTrait
         }
     }
 
-    /**
-     * @param LengthAwarePaginator $paginacao
-     * @return array<mixed>
-     */
-    private function formatarPaginacao(LengthAwarePaginator $paginacao): array
-    {
-        return [
-            'status' => Response::HTTP_OK,
-            'pagina_atual' => $paginacao->currentPage(),
-            'por_pagina' => $paginacao->perPage(),
-            'ultima_pagina' => $paginacao->lastPage(),
-            'primeira_pagina' => $paginacao->onFirstPage(),
-            'total' => $paginacao->total(),
-            'dados' => Str::replace('::class', '', $this->resourceCollection)::collection($paginacao->items())
-        ];
-    }
 
     /**
      * @inheritDoc
      */
-    public function cadastrar(array $dados): array
+    public function cadastrar(array $dados, Model $modelo): array
     {
         try {
             $dados = app($this->validations)->validator(dados: $dados);
-            $resource = app($this->modelo)->create($dados);
+            $resource = $modelo->create($dados);
             $dados = [
                 'status' => Response::HTTP_CREATED,
                 'dados' => new $this->resourceCollection($resource)
@@ -70,6 +55,22 @@ trait CrudRepositoryTrait
                 'message' => $ex->getMessage(),
                 'errors' => $ex->validator->errors()
             ];
+        }
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function exibir(Model $modelo): array
+    {
+        try {
+            $dados = [
+                'status' => Response::HTTP_OK,
+                'dados' => new $this->resourceCollection($modelo)
+            ];
+            return $dados;
+        } catch (Exception $ex) {
+            return $this->returnException(exception: $ex);
         }
     }
 
@@ -86,6 +87,23 @@ trait CrudRepositoryTrait
                 'Something went wrong!',
                 $exception->getMessage()
             )
+        ];
+    }
+
+    /**
+     * @param LengthAwarePaginator $paginacao
+     * @return array<mixed>
+     */
+    private function formatarPaginacao(LengthAwarePaginator $paginacao): array
+    {
+        return [
+            'status' => Response::HTTP_OK,
+            'pagina_atual' => $paginacao->currentPage(),
+            'por_pagina' => $paginacao->perPage(),
+            'ultima_pagina' => $paginacao->lastPage(),
+            'primeira_pagina' => $paginacao->onFirstPage(),
+            'total' => $paginacao->total(),
+            'dados' => Str::replace('::class', '', $this->resourceCollection)::collection($paginacao->items())
         ];
     }
 }

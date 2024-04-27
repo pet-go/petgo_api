@@ -3,6 +3,7 @@
 namespace App\Traits;
 
 use Exception;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
@@ -18,7 +19,7 @@ trait CrudControllerTrait
      */
     public function index(Request $request): JsonResponse
     {
-        $resource = $this->servico->pesquisar($request, $this->model);
+        $resource = $this->servico->pesquisar($request, $this->modelo);
         return response()->json($resource, data_get($resource, 'status'));
     }
 
@@ -30,7 +31,20 @@ trait CrudControllerTrait
      */
     public function store(Request $request): JsonResponse
     {
-        $resource = $this->servico->adicionar(dados: $request->all());
+        $resource = $this->servico->adicionar(dados: $request->all(),modelo: $this->modelo);
+        return response()->json($resource, data_get($resource, 'status'));
+    }
+
+    /**
+     * Buscar objeto Model
+     * 
+     * @param Model|int $id
+     * @return JsonResponse
+     */
+    public function show(Model|int $id): JsonResponse
+    {
+        $modelo = $this->modelo->find($id);
+        $resource = $this->servico->exibir($modelo);
         return response()->json($resource, data_get($resource, 'status'));
     }
 }

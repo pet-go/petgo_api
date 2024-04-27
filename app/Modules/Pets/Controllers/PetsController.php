@@ -14,7 +14,7 @@ class PetsController
 
     public function __construct(
         private readonly PetService $servico,
-        private readonly Pet $model
+        private readonly Pet $modelo
     ) {
     }
 }

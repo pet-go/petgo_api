@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\Modules\Clientes\Pipelines;
 
-use App\Models\Cliente\Cliente;
 use App\Modules\Filtros\FiltrarDataDeNascimento;
 use App\Modules\Filtros\FiltrarGenero;
 use App\Modules\Filtros\FiltrarId;

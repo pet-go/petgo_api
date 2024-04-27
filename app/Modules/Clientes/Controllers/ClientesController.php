@@ -6,7 +6,6 @@ namespace App\Modules\Clientes\Controllers;
 
 use App\Models\Cliente\Cliente;
 use App\Modules\Clientes\Services\ClienteService;
-use App\Modules\Clientes\Validations\ClienteValidation;
 use App\Traits\CrudControllerTrait;
 
 class ClientesController
@@ -15,7 +14,7 @@ class ClientesController
 
     public function __construct(
         private readonly ClienteService $servico,
-        private readonly Cliente $model
+        private readonly Cliente $modelo
     ) {
     }
 }
