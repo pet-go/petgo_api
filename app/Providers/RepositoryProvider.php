@@ -33,7 +33,7 @@ class RepositoryProvider extends ServiceProvider
         $this->app->bind(AtualizarPetContract::class, AtualizarPetRepository::class);
         $this->app->bind(RemoverPetContract::class, RemoverPetRepository::class);
     }
-
+    
     /**
      * Bootstrap services.
      */

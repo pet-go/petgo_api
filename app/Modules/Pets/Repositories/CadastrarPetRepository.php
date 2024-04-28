@@ -13,8 +13,6 @@ use App\Traits\CrudRepositoryTrait;
 class CadastrarPetRepository implements CadastrarPetContract
 {
     use CrudRepositoryTrait;
-
-    protected mixed $modelo = Pet::class;
     protected mixed $resourceCollection = PetCollection::class;
     protected mixed $validations = PetValidation::class;
 }
