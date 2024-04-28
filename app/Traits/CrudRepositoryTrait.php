@@ -66,12 +66,54 @@ trait CrudRepositoryTrait
     {
         try {
             if (!($modelo instanceof Model) || !$modelo) {
-                throw new Exception("Record not found. Please, try to inform a valid model",404);
+                throw new Exception("Record not found. Please, try to inform a valid model", 404);
             }
             $dados = [
                 'status' => Response::HTTP_OK,
                 'dados' => new $this->resourceCollection($modelo)
             ];
+            return $dados;
+        } catch (Exception $ex) {
+            return $this->returnException(exception: $ex);
+        }
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function atualizar(Model $modelo, array $dados): array
+    {
+        try {
+            if (!($modelo instanceof Model) || !$modelo) {
+                throw new Exception("Record not found. Please, try to inform a valid model", 404);
+            }
+            $dados = app($this->validations)->validator(dados: $dados);
+            $resource = $modelo->fill($dados);
+            $resource->save();
+            $dados = [
+                'status' => Response::HTTP_OK,
+                'dados' => new $this->resourceCollection($resource)
+            ];
+            return $dados;
+        } catch (ValidationException $ex) {
+            return $this->returnException(exception: $ex);
+        }
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function remover(?Model $modelo): array
+    {
+        try {
+            if (!($modelo instanceof Model) || !$modelo) {
+                throw new Exception("Record not found. Please, try to inform a valid model", 404);
+            }
+            $dados = [
+                'status' => Response::HTTP_OK,
+                'dados' => new $this->resourceCollection($modelo)
+            ];
+            $modelo->delete();
             return $dados;
         } catch (Exception $ex) {
             return $this->returnException(exception: $ex);

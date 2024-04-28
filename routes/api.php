@@ -24,7 +24,11 @@ Route::prefix('v1')->group(
         $router->controller(PetsController::class)->group(
             function ($pet) {
                 $pet->get('pets', 'index');
+                $pet->post('pets', 'store');
                 $pet->get('pets/{id}', 'show');
-        });
+                $pet->put('pets/{id}', 'update');
+                $pet->delete('pets/{id}', 'destroy');
+            }
+        );
     }
 );

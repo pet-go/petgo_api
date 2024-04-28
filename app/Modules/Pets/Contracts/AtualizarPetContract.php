@@ -2,15 +2,15 @@
 
 namespace App\Modules\Pets\Contracts;
 
-use Illuminate\Http\Resources\Json\JsonResource;
+use Illuminate\Database\Eloquent\Model;
 
 interface AtualizarPetContract
 {
     /**
      * Atualiza o Pet
      * 
-     * @param int $id
-     * @return JsonResource
+     * @param Model $pet
+     * @return array
      */
-    public function atualizar(int $id, array $dados): JsonResource;
+    public function atualizar(Model $pet, array $dados): array;
 }
