@@ -22,7 +22,7 @@ class AtualizarClienteTest extends TestCase
         $nome = $this->faker->name();
         $dados = [
             'nome' => $nome,
-            'nm_reduzido' => Str::substr($nome, 0, 10),
+            'nm_reduzido' => Str::limit($nome, 10, ''),
             'data_de_nascimento' => $this->faker->date(),
             'genero' => $this->faker->randomElement(TipoDeGeneroEnum::obterValores()),
             'dados_adicionais' => [

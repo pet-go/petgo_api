@@ -11,8 +11,6 @@ use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Validation\ValidationException;
 use Symfony\Component\HttpFoundation\Response;
 
-use function PHPUnit\Framework\throwException;
-
 trait CrudRepositoryTrait
 {
     /**
