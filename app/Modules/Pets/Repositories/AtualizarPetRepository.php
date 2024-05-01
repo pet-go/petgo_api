@@ -13,5 +13,4 @@ class AtualizarPetRepository implements AtualizarPetContract
     
     protected mixed $resourceCollection = PetCollection::class;
     protected mixed $validations = PetValidation::class;
-
 }
