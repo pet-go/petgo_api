@@ -19,6 +19,9 @@ Route::prefix('v1')->group(
             function ($cliente) {
                 $cliente->get('clientes', 'index');
                 $cliente->post('clientes', 'store');
+                $cliente->get('clientes/{id}', 'show');
+                $cliente->put('clientes/{id}', 'update');
+                $cliente->delete('clientes/{id}', 'destroy');
             }
         );
         $router->controller(PetsController::class)->group(

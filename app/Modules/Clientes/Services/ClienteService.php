@@ -5,8 +5,11 @@ declare(strict_types=1);
 namespace App\Modules\Clientes\Services;
 
 use App\Modules\Clientes\Pipelines\PesquisarCliente;
+use App\Modules\Clientes\Repositories\AtualizarClienteRepository;
 use App\Modules\Clientes\Repositories\BuscarClienteRepository;
 use App\Modules\Clientes\Repositories\CadastrarClienteRepository;
+use App\Modules\Clientes\Repositories\ExibirClienteRepository;
+use App\Modules\Clientes\Repositories\RemoverClienteRepository;
 use App\Traits\CrudServiceTrait;
 
 class ClienteService
@@ -18,7 +21,10 @@ class ClienteService
 
     public function __construct(
         private readonly BuscarClienteRepository $buscarRepository,
-        private readonly CadastrarClienteRepository $cadastrarRepository
+        private readonly ExibirClienteRepository $exibirRepository,
+        private readonly CadastrarClienteRepository $cadastrarRepository,
+        private readonly AtualizarClienteRepository $atualizarRepository,
+        private readonly RemoverClienteRepository $removerRepository
     ) {
     }
 }
