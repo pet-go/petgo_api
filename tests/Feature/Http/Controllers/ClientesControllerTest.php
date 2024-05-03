@@ -113,6 +113,12 @@ class ClientesControllerTest extends TestCase
         $this->assertEquals(data_get($dados, 'genero'), data_get($cliente, 'dados.genero'));
     }
 
+    /**
+     * Testa o endpoint de remoção
+     * 
+     * @return void
+     * 
+     */
     public function testDelete(): void
     {
         $cliente = Cliente::factory()->create();
