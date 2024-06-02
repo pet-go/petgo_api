@@ -2,7 +2,7 @@
 
 namespace App\Modules\Pets\Services;
 
-use App\Modules\Clientes\Pipelines\PesquisarPet;
+use App\Modules\Pets\Pipelines\PesquisarPet;
 use App\Modules\Pets\Repositories\AtualizarPetRepository;
 use App\Modules\Pets\Repositories\BuscarPetRepository;
 use App\Modules\Pets\Repositories\CadastrarPetRepository;

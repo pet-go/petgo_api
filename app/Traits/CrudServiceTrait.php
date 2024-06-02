@@ -5,7 +5,6 @@ namespace App\Traits;
 use App\Modules\Filtros\FiltrarId;
 use Exception;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Http\Request;
 use Illuminate\Pipeline\Pipeline;
 
 trait CrudServiceTrait
@@ -13,18 +12,18 @@ trait CrudServiceTrait
     /**
      * Serviço retorna uma lista filtrada.
      * 
-     * @param Request $request
+     * @param array<string> $filtros
      * @return array
      */
     public function pesquisar(
-        Request $request,
+        array $filtros,
         Model $model
     ): array {
         $ordenacao = (object) [
-            'per_page' => $request->input('per_page') ?? 10,
-            'page' => $request->input('page') ?? 1,
-            'ordenar_por' => $request->input('ordem') ?? 'id',
-            'sentido' => $request->input('direcao') ?? 'asc'
+            'per_page' => data_get($filtros, 'per_page', 10),
+            'page' => data_get($filtros, 'page', 1),
+            'ordenar_por' => data_get($filtros, 'ordem', 'id'),
+            'sentido' => data_get($filtros, 'direcao', 'asc')
         ];
         $resource = app($this->pesquisaPipeline)->execute($model::query());
         return $this->buscarRepository->index(resource: $resource, ordenacoes: $ordenacao);

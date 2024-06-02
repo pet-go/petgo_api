@@ -10,18 +10,13 @@ use App\Modules\Filtros\FiltrarId;
 use App\Modules\Filtros\FiltrarNome;
 use App\Modules\Filtros\FiltrarTermoDePesquisa;
 use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Http\Request;
 use Illuminate\Pipeline\Pipeline;
 
 class PesquisarCliente
 {
-    public function __construct(
-        protected Request $request
-    ) {
-    }
-
     /**
      * Execute sequência de pipeline para filtrar resultado.
+     * 
      * @param Builder $clientes
      * @return Builder
      */
