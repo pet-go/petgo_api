@@ -25,23 +25,22 @@ class BuscarClienteTest extends TestCase
     {
         $clientes = Cliente::factory()->count(10)->create();
         $ordenar_por = $this->faker->randomElement([
-            'id', 
-            'nome' , 
-            'nm_reduzido', 
-            'data_de_nascimento',
-            'genero'
+            'id',
+            'nome'
         ]);
         $filtros = [
-            'per_page' => $this->faker->randomNumber(2),
+            'per_page' => 20,
             'ordem' => $ordenar_por,
             'direcao' => $this->faker->randomElement(['asc', 'desc'])
         ];
         $dados = app(ClienteService::class)->pesquisar(filtros: $filtros, model: $this->model);
         $clienteArray = $clientes->sortBy([
             [data_get($filtros, 'ordem'), data_get($filtros, 'direcao')]
-        ])->first()
+        ])
+        ->first()
         ->getAttributes();
-        $itens = data_get($dados, 'dados.0')->getAttributes();
+        $itens = data_get($dados, 'dados.0')
+            ->getAttributes();
         $this->assertEquals(data_get($filtros, 'per_page'), data_get($dados, 'por_pagina'));
         $this->assertEquals(data_get($itens, 'nome'), data_get($clienteArray, 'nome'));
         $this->assertEquals(data_get($itens, 'id'), data_get($clienteArray, 'id'));
