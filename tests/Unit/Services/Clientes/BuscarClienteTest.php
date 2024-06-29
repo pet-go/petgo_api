@@ -20,8 +20,11 @@ class BuscarClienteTest extends TestCase
         parent::setUp();
         $this->model = app(Cliente::class);
     }
-
-    public function testBuscar()
+   /**
+   * Testa o serviço de buscar dos clientes.
+   *
+   * @return void
+    public function testBuscar(): void
     {
         $clientes = Cliente::factory()->count(10)->create();
         $ordenar_por = $this->faker->randomElement([
