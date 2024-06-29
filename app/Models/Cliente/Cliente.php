@@ -2,9 +2,11 @@
 
 namespace App\Models\Cliente;
 
+use App\Models\User\User;
 use App\Modules\Clientes\Enums\TipoDeGeneroEnum;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Cliente extends Model
@@ -15,6 +17,7 @@ class Cliente extends Model
 
     protected $fillable = [
         'nome',
+        'email',
         'nm_reduzido',
         'data_de_nascimento',
         'genero',
@@ -34,5 +37,13 @@ class Cliente extends Model
             'dados_adicionais' => 'json',
             'genero' => TipoDeGeneroEnum::class,
         ];
+    }
+
+    /**
+     * @return HasOne
+     */
+    public function usuario(): HasOne
+    {
+        return $this->HasOne(User::class, 'cliente_id');
     }
 }

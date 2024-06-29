@@ -23,6 +23,7 @@ class ClienteFactory extends Factory
         $nome = $this->faker->name;
         return [
             'nome' => $nome,
+            'email' => $this->faker->email(),
             'nm_reduzido' => Str::limit($nome, 10, ''),
             'data_de_nascimento' => $this->faker->date(),
             'genero' => $this->faker->randomElement(TipoDeGeneroEnum::obterValores()),
