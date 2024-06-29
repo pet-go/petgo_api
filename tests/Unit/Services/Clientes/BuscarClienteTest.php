@@ -20,7 +20,8 @@ class BuscarClienteTest extends TestCase
         parent::setUp();
         $this->model = app(Cliente::class);
     }
-   /**
+  
+    /**
    * Testa o serviço de buscar dos clientes.
    *
    * @return void
