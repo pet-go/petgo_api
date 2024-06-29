@@ -22,9 +22,10 @@ class BuscarClienteTest extends TestCase
     }
   
     /**
-   * Testa o serviço de buscar dos clientes.
-   *
-   * @return void
+     * Testa o serviço de buscar dos clientes.
+     * 
+     * @return void
+     */
     public function testBuscar(): void
     {
         $clientes = Cliente::factory()->count(10)->create();
