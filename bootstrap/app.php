@@ -1,8 +1,10 @@
 <?php
 
 use App\Exceptions\HandleNotFoundException;
+use App\Helpers\Helper;
 use App\Http\Middleware\BeforeHandleModelNotFound;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
+use Illuminate\Database\UniqueConstraintViolationException;
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;
@@ -26,5 +28,9 @@ return Application::configure(basePath: dirname(__DIR__))
                 'status' => Response::HTTP_NOT_FOUND,
                 'message' => 'Arquivo não localizado'
             ], Response::HTTP_NOT_FOUND);
+        });
+        $exceptions->render(function (UniqueConstraintViolationException $ex, Request $request) {
+            $exception = Helper::TratarExceptionComDadosDuplicados($ex->getMessage());
+            return response()->json($exception, Response::HTTP_CONFLICT);
         });
     })->create();

@@ -6,6 +6,7 @@ use App\Jobs\ClienteWelcomeJob;
 use App\Models\Cliente\Cliente;
 use App\Models\User\User;
 use App\Modules\Auth\Validations\AuthValidation;
+use Exception;
 use Illuminate\Support\Facades\Hash;
 use Symfony\Component\HttpFoundation\Response;
 use Illuminate\Support\Str;
@@ -24,7 +25,7 @@ class AuthService
     {
         try {
             if (!$cliente->email) {
-                throw new \Exception("Preencha o campo e-mail do cliente.",400);
+                throw new Exception("Preencha o campo e-mail do cliente.",400);
             }
             $senha = Str::password(8, true, true, false, false);
             $cliente->usuario()->create([
@@ -37,11 +38,8 @@ class AuthService
                 'status' => Response::HTTP_CREATED,
                 'dados' => $cliente->usuario
             ];
-        } catch (\Exception $ex) {
-            return [
-                'status' => Response::HTTP_UNPROCESSABLE_ENTITY,
-                'message' => $ex->getMessage(),
-            ];
+        } catch (Exception $ex) {
+            throw $ex;
         }
     }
 

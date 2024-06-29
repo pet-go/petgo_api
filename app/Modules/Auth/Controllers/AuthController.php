@@ -27,7 +27,7 @@ class AuthController
     {
         return response()->json(
             $this->service->cadastrarCliente(cliente: $cliente),
-            Response::HTTP_OK
+            Response::HTTP_CREATED
         );
     }
 
