@@ -20,7 +20,7 @@ trait CrudControllerTrait
      */
     public function index(Request $request): JsonResponse
     {
-        $resource = $this->servico->pesquisar($request, $this->modelo);
+        $resource = $this->servico->pesquisar($request->all(), $this->modelo);
         return response()->json($resource, data_get($resource, 'status'));
     }
 

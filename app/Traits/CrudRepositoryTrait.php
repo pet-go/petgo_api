@@ -125,12 +125,11 @@ trait CrudRepositoryTrait
     private function returnException(Exception $exception): array
     {
         return [
-            'status' => $exception->getCode() == 0 ? Response::HTTP_INTERNAL_SERVER_ERROR : $exception->getCode(),
+            'status' => $exception->getCode() == 0 
+                ? Response::HTTP_INTERNAL_SERVER_ERROR 
+                : $exception->getCode(),
+            'error' => 'Algo deu errado com a solicitação',
             'message' => $exception->getMessage(),
-            'errors' => DeepLangService::fixLang(
-                'Something went wrong!',
-                $exception->getMessage()
-            )
         ];
     }
 
