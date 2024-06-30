@@ -3,7 +3,6 @@
 namespace App\Modules\Pets\Pipelines;
 
 use App\Modules\Filtros\FiltrarDataDeNascimento;
-use App\Modules\Filtros\FiltrarEstirpe;
 use App\Modules\Filtros\FiltrarId;
 use App\Modules\Filtros\FiltrarNome;
 use App\Modules\Filtros\FiltrarTermoDePesquisa;
@@ -14,6 +13,7 @@ class PesquisarPet
 {
     /**
      * Filtra consulta através das Pipelines
+     * 
      * @param Builder $pets
      * @return Builder
      */

@@ -10,10 +10,8 @@ use Illuminate\Http\Request;
 
 class FiltrarId
 {
-    public function __construct(
-        protected Request $request
-    ) {
-    }
+    public function __construct(protected Request $request) 
+    {}
 
     /**
      * Aplica o filtro ID, caso esse parâmetros seja enviado.
