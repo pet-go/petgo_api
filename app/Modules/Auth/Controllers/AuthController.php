@@ -26,7 +26,7 @@ class AuthController
     public function cadastrar(Cliente $cliente): JsonResponse
     {
         return response()->json(
-            $this->service->cadastrarCliente(cliente: $cliente),
+            $this->service->cadastrarUsuarioParaCliente(cliente: $cliente),
             Response::HTTP_CREATED
         );
     }
