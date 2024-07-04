@@ -33,6 +33,7 @@ class Cliente extends Model
     {
         return [
             'nome' => 'string',
+            'email' => 'string',
             'nm_reduzido' => 'string',
             'dados_adicionais' => 'json',
             'genero' => TipoDeGeneroEnum::class,

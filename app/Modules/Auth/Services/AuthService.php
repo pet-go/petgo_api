@@ -21,7 +21,7 @@ class AuthService
      * @param array $dados
      * @return array
      */
-    public function cadastrarCliente(Cliente $cliente): array
+    public function cadastrarUsuarioParaCliente(Cliente $cliente): array
     {
         try {
             if (!$cliente->email) {
