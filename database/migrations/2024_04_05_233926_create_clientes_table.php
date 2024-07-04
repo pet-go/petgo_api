@@ -1,5 +1,6 @@
 <?php
 
+use App\Modules\Clientes\Enums\TipoDeGeneroEnum;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -17,7 +18,7 @@ return new class extends Migration
             $table->string('nm_reduzido',30)->comment('Nome reduzido do cliente');
             $table->date('data_de_nascimento')->comment('Data de nascimento do cliente')
                 ->nullable();
-            $table->string('genero')->comment('Gênero/Sexualidade do cliente')
+            $table->enum('genero',TipoDeGeneroEnum::obterValores())->comment('Gênero/Sexualidade do cliente')
                 ->nullable();
             $table->json('dados_adicionais')->comment('Complementos como cpf,rg e outros dados do gênero')
                 ->nullable();

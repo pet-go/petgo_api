@@ -22,7 +22,7 @@ class PetFactory extends Factory
             'nome' => $this->faker->name,
             'cliente_id' => Cliente::factory()->lazy(),
             'estirpe_id' => Estirpe::factory()->lazy(),
-            'data_de_nascimento' => fake()->date()
+            'data_de_nascimento' => $this->faker->date()
         ];
     }
 }

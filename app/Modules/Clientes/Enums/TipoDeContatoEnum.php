@@ -8,7 +8,7 @@ enum TipoDeContatoEnum: string
     case EMAIL = 'e-mail';
     case TELEFONE = 'telefone';
 
-    public static function allValues(): array
+    public static function obterValores(): array
     {
         return [
             self::EMAIL->value,

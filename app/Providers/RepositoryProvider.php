@@ -2,8 +2,26 @@
 
 namespace App\Providers;
 
-use App\Modules\Clientes\Contracts\ClienteContract;
-use App\Modules\Clientes\Repositories\ClienteRepository;
+use App\Modules\Clientes\Contracts\AtualizarClienteContract;
+use App\Modules\Clientes\Contracts\BuscarClienteContract;
+use App\Modules\Clientes\Contracts\CadastrarClienteContrat;
+use App\Modules\Clientes\Contracts\ExibirClienteContract;
+use App\Modules\Clientes\Contracts\RemoverClienteContract;
+use App\Modules\Clientes\Repositories\AtualizarClienteRepository;
+use App\Modules\Clientes\Repositories\BuscarClienteRepository;
+use App\Modules\Clientes\Repositories\CadastrarClienteRepository;
+use App\Modules\Clientes\Repositories\ExibirClienteRepository;
+use App\Modules\Clientes\Repositories\RemoverClienteRepository;
+use App\Modules\Pets\Contracts\AtualizarPetContract;
+use App\Modules\Pets\Contracts\BuscarPetContract;
+use App\Modules\Pets\Contracts\CadastrarPetContract;
+use App\Modules\Pets\Contracts\ExibirPetContract;
+use App\Modules\Pets\Contracts\RemoverPetContract;
+use App\Modules\Pets\Repositories\AtualizarPetRepository;
+use App\Modules\Pets\Repositories\BuscarPetRepository;
+use App\Modules\Pets\Repositories\CadastrarPetRepository;
+use App\Modules\Pets\Repositories\ExibirPetRepository;
+use App\Modules\Pets\Repositories\RemoverPetRepository;
 use Illuminate\Support\ServiceProvider;
 
 class RepositoryProvider extends ServiceProvider
@@ -13,9 +31,18 @@ class RepositoryProvider extends ServiceProvider
      */
     public function register(): void
     {
-        $this->app->bind(ClienteContract::class, ClienteRepository::class);
+        $this->app->bind(BuscarClienteContract::class, BuscarClienteRepository::class);
+        $this->app->bind(ExibirClienteContract::class, ExibirClienteRepository::class);
+        $this->app->bind(CadastrarClienteContrat::class, CadastrarClienteRepository::class);
+        $this->app->bind(AtualizarClienteContract::class, AtualizarClienteRepository::class);
+        $this->app->bind(RemoverClienteContract::class,RemoverClienteRepository::class);
+        $this->app->bind(CadastrarPetContract::class, CadastrarPetRepository::class);
+        $this->app->bind(BuscarPetContract::class, BuscarPetRepository::class);
+        $this->app->bind(ExibirPetContract::class, ExibirPetRepository::class);
+        $this->app->bind(AtualizarPetContract::class, AtualizarPetRepository::class);
+        $this->app->bind(RemoverPetContract::class, RemoverPetRepository::class);
     }
-
+    
     /**
      * Bootstrap services.
      */

@@ -1,16 +1,16 @@
 <?php
 
-declare(strict_types=1);
-
 namespace App\Modules\Pets\Repositories;
 
+use App\Modules\Pets\Contracts\AtualizarPetContract;
 use App\Modules\Pets\Resources\PetCollection;
+use App\Modules\Pets\Validations\PetValidation;
 use App\Traits\CrudRepositoryTrait;
 
-class PetRepository
+class AtualizarPetRepository implements AtualizarPetContract
 {
     use CrudRepositoryTrait;
-
-    /** @var $resourceCollection */
+    
     protected mixed $resourceCollection = PetCollection::class;
+    protected mixed $validations = PetValidation::class;
 }
