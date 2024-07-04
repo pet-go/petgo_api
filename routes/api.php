@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Middleware\JwtMiddleware;
+use App\Modules\Auth\Controllers\AuthController;
 use App\Modules\Clientes\Controllers\ClientesController;
 use App\Modules\Pets\Controllers\PetsController;
 use Illuminate\Support\Facades\Route;
@@ -31,6 +32,11 @@ Route::prefix('v1')->group(
                 $pet->get('pets/{id}', 'show');
                 $pet->put('pets/{id}', 'update');
                 $pet->delete('pets/{id}', 'destroy');
+            }
+        );
+        $router->controller(AuthController::class)->group(
+            function ($auth) {
+                $auth->post('auth-cliente/{cliente}', 'cadastrar');
             }
         );
     }
