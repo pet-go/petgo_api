@@ -18,6 +18,7 @@ class ClienteCollection extends JsonResource
             'id' => $this->id,
             'nome' => $this->nome,
             'nm_reduzido' => $this->nm_reduzido,
+            'email' => $this->email,
             'data_de_nascimento' => $this->data_de_nascimento,
             'genero' => $this->genero,
             'criado_em' => Carbon::parse($this->created_at)->format('Y-m-d h:i:s'),

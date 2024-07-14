@@ -23,17 +23,20 @@ class AuthController
      * @param Cliente $cliente
      * @return JsonResponse
      */
-    public function cadastrar(Cliente $cliente): JsonResponse
+    public function register(Cliente $cliente): JsonResponse
     {
         return response()->json(
-            $this->service->cadastrarUsuarioParaCliente(cliente: $cliente),
+            $this->service->registerNewUser(cliente: $cliente),
             Response::HTTP_CREATED
         );
     }
 
-    public function login(Request $request)
+    public function login(Request $request): JsonResponse
     {
-
+        return response()->json(
+            $this->service->loginClientUser(dados: $request->all()),
+            Response::HTTP_OK
+        );
     }
 
     public function me()

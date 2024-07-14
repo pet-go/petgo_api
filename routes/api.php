@@ -36,7 +36,8 @@ Route::prefix('v1')->group(
         );
         $router->controller(AuthController::class)->group(
             function ($auth) {
-                $auth->post('auth-cliente/{cliente}', 'cadastrar');
+                $auth->post('auth-cliente/{cliente}', 'register');
+                $auth->post('auth-cliente', 'login');
             }
         );
     }

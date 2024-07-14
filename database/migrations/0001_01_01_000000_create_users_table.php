@@ -16,7 +16,7 @@ return new class extends Migration
             $tabela->string('nome')->comment('Nome do usuário');
             $tabela->string('email')->comment('Email único')->unique();
             $tabela->timestamp('email_verified_at')->comment('Data de verificação do e-mail')->nullable();
-            $tabela->string('senha',100)->comment('Senha de acesso');
+            $tabela->string('password',100)->comment('Senha de acesso');
             $tabela->rememberToken();
             $tabela->timestamps();
             $tabela->softDeletes();
