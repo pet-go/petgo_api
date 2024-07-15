@@ -29,7 +29,7 @@ class AuthServiceTest extends TestCase
     public function testCadastrarUsuarioParaCliente(): void
     {
         $cliente = Cliente::factory()->create();
-        $cliente = app(AuthService::class)->cadastrarUsuarioParaCliente($cliente);
+        $cliente = app(AuthService::class)->registerNewUser($cliente);
         $dados = data_get($cliente, 'dados')->toArray();
         $this->assertDatabaseHas('usuarios', [
             'nome' => data_get($dados, 'nome'),
@@ -52,6 +52,6 @@ class AuthServiceTest extends TestCase
         $this->expectException(Exception::class);
         $this->expectExceptionMessage('Preencha o campo e-mail do cliente.');
         $this->expectExceptionCode(400);
-        app(AuthService::class)->cadastrarUsuarioParaCliente($cliente);
+        app(AuthService::class)->registerNewUser($cliente);
     }
 }

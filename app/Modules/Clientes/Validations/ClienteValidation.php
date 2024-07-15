@@ -19,6 +19,7 @@ class ClienteValidation implements BaseValidation
         return Validator::make($dados,[
             'nome' => ['required', 'string', 'max:255', 'min:3'],
             'nm_reduzido' => ['required','string', 'max:30','min:3'],
+            'email' => ['sometimes', 'string', 'email'],
             'data_de_nascimento'=> ['sometimes','date'],
             'genero' => ['string','sometimes',Rule::in(TipoDeGeneroEnum::obterValores())],
             'dados_adicionais' => ['nullable','array']
