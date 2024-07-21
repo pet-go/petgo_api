@@ -6,29 +6,35 @@ namespace App\Modules\Filtros;
 
 use Closure;
 use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Http\Request;
 
 class FiltrarEstirpe
-{
-    public function __construct(
-        protected Request $request
-    ) {
-    }
-    
+{    
     /**
      * Aplica o filtro Estirpe, caso esse parâmetro seja enviádo.
      * 
-     * @param Builder $builder
+     * @param array $itens
      * @param Closure $next
      * 
-     * @return Builder
+     * @return array
      */
-    public function handle(Builder $builder, Closure $next): Builder
+    public function handle(array $itens, Closure $next): array
     {
-        return $next($builder)
+        $filtros = data_get($itens, 'filtros');
+        $builder = data_get($itens, 'builder');
+        $resource = collect($filtros)->firstWhere('coluna', 'estirpe');
+        $query = $next($builder)
             ->when(
-                $this->request->filled('estirpe'),
-                fn (Builder $query) => $query->where('estirpe', 'REGEXP', $this->request->estirpe)
+                !is_null($resource), function (Builder $query) use($resource) {
+                    return $query->whereHas('estirpe', fn(Builder $query) => $query->whereAny(
+                        $query->getModel()->getFillable(),
+                        'REGEXP',
+                        data_get($resource, 'valor')
+                    ));
+                }
             );
+        return $next([
+            'filtros' => $filtros,
+            'builder' => $query ? $query : $builder
+        ]);
     }
 }

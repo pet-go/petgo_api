@@ -6,37 +6,34 @@ namespace App\Modules\Filtros;
 
 use Closure;
 use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\Model;
-use Illuminate\Http\Request;
 
 class FiltrarTermoDePesquisa
 {
-    public function __construct(
-        protected Request $request,
-    ) {
-    }
 
     /**
      * Aplica o filtro do termo de pesquisa.
      * 
-     * @param Builder $builder
-     * @param Model $model
+     * @param array $itens
      * @param Closure $next
      * 
-     * @return Builder
+     * @return array
      */
-    public function handle(Builder $builder, Closure $next): Builder
+    public function handle(array $itens, Closure $next): array
     {
-        return $next($builder)
-            ->when(
-                $this->request->filled('termo_de_pesquisa'),
-                function (Builder $query) {
-                    $query->whereAny(
-                        $query->getModel()->getFillable(),
-                        'REGEXP',
-                        $this->request->termo_de_pesquisa
-                    );
-                }
-            );
+        $filtros = data_get($itens, 'filtros');
+        $builder = data_get($itens, 'builder');
+        $resource = collect($filtros)->firstWhere('coluna', 'termo_de_pesquisa');
+        $query = $builder
+            ->when(!is_null($resource), function (Builder $query) use($resource) {
+                return $query->whereAny(
+                   $query->getModel()->getFillable(),
+                   'REGEXP',
+                   $resource['valor']
+                );
+            });
+        return $next([
+            'filtros' => $filtros,
+            'builder' => $query
+        ]);
     }
 }

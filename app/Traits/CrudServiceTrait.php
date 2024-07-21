@@ -17,7 +17,6 @@ trait CrudServiceTrait
      */
     public function pesquisar(
         array $filtros,
-        Model $model
     ): array {
         $ordenacao = (object) [
             'per_page' => data_get($filtros, 'per_page', 10),
@@ -25,7 +24,7 @@ trait CrudServiceTrait
             'ordenar_por' => data_get($filtros, 'ordem', 'id'),
             'sentido' => data_get($filtros, 'direcao', 'asc')
         ];
-        $resource = app($this->pesquisaPipeline)->execute($model::query());
+        $resource = app($this->pesquisaPipeline)->execute($filtros);
         return $this->buscarRepository->index(resource: $resource, ordenacoes: $ordenacao);
     }
 

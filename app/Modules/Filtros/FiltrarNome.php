@@ -6,27 +6,30 @@ namespace App\Modules\Filtros;
 
 use Closure;
 use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Http\Request;
 
 class FiltrarNome
 {
-    public function __construct(protected Request $request)
-    {}
-
     /**
-     * Aplica o filtro nome, caso esse parâmetros seja enviado.
+     * Aplica o filtro nome, caso esse parâmetro seja enviado.
      * 
-     * @param Request $request
+     * @param array $itens
      * @param Closure $next
      * 
-     * @return Closure
+     * @return array
      */
-    public function handle(Builder $builder, Closure $next): Builder
+    public function handle(array $itens, Closure $next): array
     {
-        return $next($builder)
+        $filtros = data_get($itens, 'filtros');
+        $builder = data_get($itens, 'builder');
+        $resource = collect(data_get($filtros, 'filtros', []))->firstWhere('coluna', 'nome');
+        $query = $builder
             ->when(
-                $this->request->filled('nome'),
-                fn (Builder $query) => $query->where('nome', 'REGEXP', $this->request->nome)
+                !is_null($resource),
+                fn (Builder $query) => $query->where('nome', 'REGEXP', data_get($resource, 'valor'))
             );
+        return $next([
+            'filtros' => $filtros,
+            'builder' => $query
+        ]);
     }
 }

@@ -6,27 +6,30 @@ namespace App\Modules\Filtros;
 
 use Closure;
 use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Http\Request;
 
 class FiltrarId
 {
-    public function __construct(protected Request $request) 
-    {}
-
     /**
      * Aplica o filtro ID, caso esse parâmetros seja enviado.
      * 
-     * @param Builder $builder 
+     * @param array $itens 
      * @param Closure $next
      * 
-     * @return Closure
+     * @return array
      */
-    public function handle(Builder $builder, Closure $next): Builder
+    public function handle(array $itens, Closure $next): array
     {
-        return $next($builder)
+        $filtros = data_get($itens, 'filtros');
+        $builder = data_get($itens, 'builder');
+        $resource = collect($filtros)->firstWhere('coluna', 'id');
+        $query = $builder
             ->when(
-                $this->request->id,
-                fn (Builder $query) => $query->where('id', $this->request->id)
+                !is_null($resource),
+                fn (Builder $query) => $query->where('id', data_get($resource, 'valor'))
             );
+        return $next([
+            'filtros' => $filtros,
+            'builder' => $query
+        ]);
     }
 }
