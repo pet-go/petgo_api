@@ -5,8 +5,6 @@ namespace Tests\Unit\Services\Clientes;
 use App\Models\Cliente\Cliente;
 use App\Modules\Clientes\Enums\TipoDeGeneroEnum;
 use App\Modules\Clientes\Services\ClienteService;
-use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Validation\ValidationException;
 use Illuminate\Support\Str;
 use Symfony\Component\HttpFoundation\Response;
@@ -14,8 +12,6 @@ use Tests\TestCase;
 
 class CadastrarClienteTest extends TestCase
 {
-    use WithFaker, RefreshDatabase;
-
     protected mixed $modelo = Cliente::class;
 
     /**

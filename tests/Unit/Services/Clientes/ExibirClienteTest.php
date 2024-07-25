@@ -4,15 +4,11 @@ namespace Unit\Services\Clientes;
 
 use App\Models\Cliente\Cliente;
 use App\Modules\Clientes\Services\ClienteService;
-use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
 use Symfony\Component\HttpFoundation\Response;
 use Tests\TestCase;
 
 class ExibirClienteTest extends TestCase
 {
-    use RefreshDatabase, WithFaker;
-
     /**
      * Testa o serviço de busca do cliente
      * 
@@ -35,8 +31,8 @@ class ExibirClienteTest extends TestCase
      */
     public function testDeveFalharAoBuscarClienteQueNaoExiste(): void
     {
-        $cliente = Cliente::factory()->create();
-        $cliente->delete();
+        Cliente::query()->delete();
+        $cliente = Cliente::first();
         $buscarCliente = app(ClienteService::class)->exibir($cliente);
         $this->assertEquals(
             data_get($buscarCliente, 'status'),

@@ -2,7 +2,6 @@
 
 namespace App\Traits;
 
-use App\Modules\Filtros\FiltrarId;
 use Exception;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\JsonResponse;
@@ -39,38 +38,40 @@ trait CrudControllerTrait
     /**
      * Buscar objeto Model
      * 
-     * @param Model|int $id
+     * @param int $id
      * @return JsonResponse
      */
-    public function show(): JsonResponse
+    public function show(int $id): JsonResponse
     {
-        $resource = $this->servico->exibir($this->modelo);
+        $modelo = $this->modelo->findOrFail($id);
+        $resource = $this->servico->exibir(modelo: $modelo);
         return response()->json($resource, data_get($resource, 'status'));
     }
 
     /**
      * Atualizar objeto Model
      * 
-     * @param Model|int $id
-     * @param array $dados
+     * @param int $id
+     * @param Request $request
      * @return JsonResponse
      */
-    public function update(Request $request): JsonResponse
+    public function update(int $id, Request $request): JsonResponse
     {
-        $resource = $this->servico->atualizar(modelo: $this->modelo, dados: $request->all());
+        $modelo = $this->modelo->find($id);
+        $resource = $this->servico->atualizar(modelo: $modelo, dados: $request->all());
         return response()->json($resource, data_get($resource, 'status'));
     }
 
     /**
      * Remover objeto Model
      * 
-     * @param Model|int $id
-     * @param array $dados
+     * @param int $id
      * @return JsonResponse
      */
-    public function destroy(): JsonResponse
+    public function destroy(int $id): JsonResponse
     {
-        $resource = $this->servico->remover(modelo: $this->modelo);
+        $modelo = $this->modelo->find($id);
+        $resource = $this->servico->remover(modelo: $modelo);
         return response()->json($resource, data_get($resource, 'status'));
     }
 }

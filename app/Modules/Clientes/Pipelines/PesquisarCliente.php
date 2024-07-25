@@ -4,7 +4,8 @@ declare(strict_types=1);
 
 namespace App\Modules\Clientes\Pipelines;
 
-use App\Modules\Filtros\FiltrarDataDeNascimento;
+use App\Models\Cliente\Cliente;
+use App\Modules\Filtros\FiltrarPorAniversario;
 use App\Modules\Filtros\FiltrarGenero;
 use App\Modules\Filtros\FiltrarId;
 use App\Modules\Filtros\FiltrarNome;
@@ -17,20 +18,25 @@ class PesquisarCliente
     /**
      * Execute sequência de pipeline para filtrar resultado.
      * 
-     * @param Builder $clientes
+     * @param array $filtros
      * @return Builder
      */
-    public function execute(Builder $clientes): Builder
+    public function execute(array $filtros): Builder
     {
-        return (new Pipeline(app()))
-            ->send($clientes)
+        $itens = [
+            'filtros' => data_get($filtros, 'filtros'),
+            'builder' => Cliente::query()
+        ];
+        $dados = (new Pipeline(app()))
+            ->send($itens)
             ->through([
                 FiltrarId::class,
                 FiltrarNome::class,
-                FiltrarDataDeNascimento::class,
+                FiltrarPorAniversario::class,
                 FiltrarGenero::class,
                 FiltrarTermoDePesquisa::class
             ])
             ->thenReturn();
+        return data_get($dados, 'builder');
     }
 }

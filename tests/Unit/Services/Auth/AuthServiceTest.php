@@ -6,15 +6,11 @@ use App\Jobs\ClienteWelcomeJob;
 use App\Models\Cliente\Cliente;
 use App\Modules\Auth\Services\AuthService;
 use Exception;
-use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Support\Facades\Queue;
 use Tests\TestCase;
 
 class AuthServiceTest extends TestCase
 {
-    use WithFaker, RefreshDatabase;
-
     public function setUp(): void
     {
         parent::setUp();

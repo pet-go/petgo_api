@@ -5,8 +5,6 @@ namespace Tests\Feature\Http\Controllers;
 use App\Models\Cliente\Cliente;
 use App\Modules\Clientes\Enums\TipoDeGeneroEnum;
 use Exception;
-use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
 use Illuminate\Support\Str;
 use Illuminate\Validation\ValidationException;
@@ -14,8 +12,6 @@ use Symfony\Component\HttpFoundation\Response;
 
 class ClientesControllerTest extends TestCase
 {
-    use RefreshDatabase, WithFaker;
-
     /**
      * Testa a listagem de clientes
      * 
