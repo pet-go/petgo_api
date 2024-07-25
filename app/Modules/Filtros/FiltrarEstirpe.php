@@ -22,7 +22,7 @@ class FiltrarEstirpe
         $filtros = data_get($itens, 'filtros');
         $builder = data_get($itens, 'builder');
         $resource = collect($filtros)->firstWhere('coluna', 'estirpe');
-        $query = $next($builder)
+        $query = $builder
             ->when(
                 !is_null($resource), function (Builder $query) use($resource) {
                     return $query->whereHas('estirpe', fn(Builder $query) => $query->whereAny(
@@ -34,7 +34,7 @@ class FiltrarEstirpe
             );
         return $next([
             'filtros' => $filtros,
-            'builder' => $query ? $query : $builder
+            'builder' => $query
         ]);
     }
 }

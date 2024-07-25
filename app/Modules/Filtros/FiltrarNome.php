@@ -21,7 +21,7 @@ class FiltrarNome
     {
         $filtros = data_get($itens, 'filtros');
         $builder = data_get($itens, 'builder');
-        $resource = collect(data_get($filtros, 'filtros', []))->firstWhere('coluna', 'nome');
+        $resource = collect($filtros)->firstWhere('coluna', 'nome');
         $query = $builder
             ->when(
                 !is_null($resource),

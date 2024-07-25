@@ -35,8 +35,8 @@ class ExibirClienteTest extends TestCase
      */
     public function testDeveFalharAoBuscarClienteQueNaoExiste(): void
     {
-        $cliente = Cliente::factory()->create();
-        $cliente->delete();
+        Cliente::query()->delete();
+        $cliente = Cliente::first();
         $buscarCliente = app(ClienteService::class)->exibir($cliente);
         $this->assertEquals(
             data_get($buscarCliente, 'status'),
