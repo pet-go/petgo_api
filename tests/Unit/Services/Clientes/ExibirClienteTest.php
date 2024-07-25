@@ -4,15 +4,11 @@ namespace Unit\Services\Clientes;
 
 use App\Models\Cliente\Cliente;
 use App\Modules\Clientes\Services\ClienteService;
-use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
 use Symfony\Component\HttpFoundation\Response;
 use Tests\TestCase;
 
 class ExibirClienteTest extends TestCase
 {
-    use RefreshDatabase, WithFaker;
-
     /**
      * Testa o serviço de busca do cliente
      * 

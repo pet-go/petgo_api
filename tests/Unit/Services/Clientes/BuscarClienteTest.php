@@ -5,15 +5,11 @@ namespace Unit\Services\Clientes;
 use App\Models\Cliente\Cliente;
 use App\Modules\Clientes\Services\ClienteService;
 use Carbon\Carbon;
-use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
 use PHPUnit\Framework\Attributes\Test;
 use Tests\TestCase;
 
 class BuscarClienteTest extends TestCase
 {
-    use RefreshDatabase, WithFaker;
-
     /**
      * Testa o serviço de buscar dos clientes.
      * 
