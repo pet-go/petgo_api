@@ -5,16 +5,13 @@ namespace Unit\Services\Auth;
 use App\Jobs\ClienteWelcomeJob;
 use App\Models\Cliente\Cliente;
 use App\Modules\Auth\Services\AuthService;
-use Exception;
-use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Support\Facades\Queue;
+use PHPUnit\Framework\Attributes\Test;
 use Tests\TestCase;
+use Exception;
 
 class AuthServiceTest extends TestCase
 {
-    use WithFaker, RefreshDatabase;
-
     public function setUp(): void
     {
         parent::setUp();
@@ -26,7 +23,8 @@ class AuthServiceTest extends TestCase
      * 
      * @return void
      */
-    public function testCadastrarUsuarioParaCliente(): void
+    #[Test]
+    public function cadastrar_usuario_para_cliente(): void
     {
         $cliente = Cliente::factory()->create();
         $cliente = app(AuthService::class)->registerNewUser($cliente);
@@ -44,7 +42,8 @@ class AuthServiceTest extends TestCase
      * 
      * @return void
      */
-    public function testDeveFalharQuandoOClienteNaoPossuirEmail(): void
+    #[Test]
+    public function deve_falhar_quando_o_cliente_nao_possuir_email(): void
     {
         $cliente = Cliente::factory()->create([
             'email' => null

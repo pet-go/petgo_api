@@ -17,7 +17,6 @@ trait CrudServiceTrait
      */
     public function pesquisar(
         array $filtros,
-        Model $model
     ): array {
         $ordenacao = (object) [
             'per_page' => data_get($filtros, 'per_page', 10),
@@ -25,7 +24,7 @@ trait CrudServiceTrait
             'ordenar_por' => data_get($filtros, 'ordem', 'id'),
             'sentido' => data_get($filtros, 'direcao', 'asc')
         ];
-        $resource = app($this->pesquisaPipeline)->execute($model::query());
+        $resource = app($this->pesquisaPipeline)->execute($filtros);
         return $this->buscarRepository->index(resource: $resource, ordenacoes: $ordenacao);
     }
 
@@ -54,21 +53,14 @@ trait CrudServiceTrait
     /**
      * O serviço retorna um único registro à ser exibido
      * 
-     * @param Model $model
+     * @param Model $modelo
      * @return array
      * 
      * @throws Exception
      */
     public function exibir(
-        Model $model
+        ?Model $modelo
     ): array {
-        $modelo = (new Pipeline(app()))
-            ->send($model::query())
-            ->through([
-                FiltrarId::class,
-            ])
-            ->thenReturn()
-            ->first();
         return $this->exibirRepository->exibir($modelo);
     }
 
@@ -85,13 +77,6 @@ trait CrudServiceTrait
         Model $modelo,
         array $dados
     ): array {
-        $modelo = (new Pipeline(app()))
-            ->send($modelo::query())
-            ->through([
-                FiltrarId::class,
-            ])
-            ->thenReturn()
-            ->first();
         return $this->atualizarRepository->atualizar(modelo: $modelo, dados: $dados);
     }
 
@@ -100,18 +85,10 @@ trait CrudServiceTrait
      * 
      * @param Model $modelo
      * @return array
-     * 
      * @throws Exception
      */
     public function remover(Model $modelo): array
     {
-        $modelo = (new Pipeline(app()))
-            ->send($modelo::query())
-            ->through([
-                FiltrarId::class,
-            ])
-            ->thenReturn()
-            ->first();
         return $this->removerRepository->remover(modelo: $modelo);
     }
 }

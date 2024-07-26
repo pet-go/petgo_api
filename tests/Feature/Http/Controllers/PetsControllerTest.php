@@ -3,17 +3,16 @@
 namespace Tests\Feature\Http\Controllers;
 
 use App\Models\Pet\Pet;
-use Illuminate\Foundation\Testing\RefreshDatabase;
+use PHPUnit\Framework\Attributes\Test;
 use Tests\TestCase;
 
 class PetsControllerTest extends TestCase
 {
-    use RefreshDatabase;
-
      /**
      * Testa o endpoint de listagem de pets
      */
-    public function testIndex(): void
+    #[Test]
+    public function index(): void
     {
         Pet::factory()->count(10)->create();
         $response = $this->getJson('/api/v1/pets');

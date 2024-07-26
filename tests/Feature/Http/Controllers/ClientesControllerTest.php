@@ -5,8 +5,7 @@ namespace Tests\Feature\Http\Controllers;
 use App\Models\Cliente\Cliente;
 use App\Modules\Clientes\Enums\TipoDeGeneroEnum;
 use Exception;
-use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
+use PHPUnit\Framework\Attributes\Test;
 use Tests\TestCase;
 use Illuminate\Support\Str;
 use Illuminate\Validation\ValidationException;
@@ -14,8 +13,6 @@ use Symfony\Component\HttpFoundation\Response;
 
 class ClientesControllerTest extends TestCase
 {
-    use RefreshDatabase, WithFaker;
-
     /**
      * Testa a listagem de clientes
      * 
@@ -23,7 +20,8 @@ class ClientesControllerTest extends TestCase
      * 
      * @throws Exception
      */
-    public function testIndex(): void
+    #[Test]
+    public function index(): void
     {
         Cliente::factory()->count(10)->create();
         $response = $this->getJson('/api/v1/clientes');
@@ -50,7 +48,8 @@ class ClientesControllerTest extends TestCase
      * 
      * @throws ValidationException
      */
-    public function testStore(): void
+    #[Test]
+    public function store(): void
     {
         $nome = $this->faker->name();
         $dados = [
@@ -73,7 +72,8 @@ class ClientesControllerTest extends TestCase
      * 
      * @return void
      */
-    public function testShow(): void
+    #[Test]
+    public function show(): void
     {
         $cliente = Cliente::factory()->create();
         $resposta = $this->getJson('/api/v1/clientes/' . $cliente->id);
@@ -91,7 +91,8 @@ class ClientesControllerTest extends TestCase
      * 
      * @throws ValidationException
      */
-    public function testUpdate(): void
+    #[Test]
+    public function update(): void
     {
         $cliente = Cliente::factory()->create();
         $nome = $this->faker->name();
@@ -117,9 +118,9 @@ class ClientesControllerTest extends TestCase
      * Testa o endpoint de remoção
      * 
      * @return void
-     * 
      */
-    public function testDelete(): void
+    #[Test]
+    public function remover(): void
     {
         $cliente = Cliente::factory()->create();
         $resposta = $this->deleteJson('/api/v1/clientes/' . $cliente->id);
