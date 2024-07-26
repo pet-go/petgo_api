@@ -6,8 +6,9 @@ use App\Models\Cliente\Cliente;
 use App\Modules\Clientes\Enums\TipoDeGeneroEnum;
 use App\Modules\Clientes\Services\ClienteService;
 use Illuminate\Validation\ValidationException;
-use Illuminate\Support\Str;
 use Symfony\Component\HttpFoundation\Response;
+use PHPUnit\Framework\Attributes\Test;
+use Illuminate\Support\Str;
 use Tests\TestCase;
 
 class CadastrarClienteTest extends TestCase
@@ -20,7 +21,8 @@ class CadastrarClienteTest extends TestCase
      * 
      * @throws ValidationException
      */
-    public function testAdicionar(): void
+    #[Test]
+    public function adicionar(): void
     {
         $nome = $this->faker->name();
         $dados = [
@@ -50,7 +52,8 @@ class CadastrarClienteTest extends TestCase
      * @return void
      * @throws ValidationException
      */
-    public function testDeveFalharAoTentarCadastrarGeneroIncorreto(): void
+    #[Test]
+    public function deve_falhar_ao_tentar_cadastrar_genero_incorreto(): void
     {
         $nome = $this->faker->name();
         $dados = [

@@ -5,14 +5,15 @@ namespace Unit\Services\Clientes;
 use App\Models\Cliente\Cliente;
 use App\Modules\Clientes\Enums\TipoDeGeneroEnum;
 use App\Modules\Clientes\Services\ClienteService;
-use Illuminate\Support\Str;
 use Symfony\Component\HttpFoundation\Response;
+use PHPUnit\Framework\Attributes\Test;
+use Illuminate\Support\Str;
 use Tests\TestCase;
 
 class AtualizarClienteTest extends TestCase
 {
-    protected mixed $modelo = Cliente::class;
-    public function testAtualizar()
+    #[Test]
+    public function atualizar(): void
     {
         $cliente = Cliente::factory()->create();
         $nome = $this->faker->name();

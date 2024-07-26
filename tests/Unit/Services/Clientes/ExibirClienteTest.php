@@ -4,6 +4,7 @@ namespace Unit\Services\Clientes;
 
 use App\Models\Cliente\Cliente;
 use App\Modules\Clientes\Services\ClienteService;
+use PHPUnit\Framework\Attributes\Test;
 use Symfony\Component\HttpFoundation\Response;
 use Tests\TestCase;
 
@@ -14,7 +15,8 @@ class ExibirClienteTest extends TestCase
      * 
      * @return void
      */
-    public function testExibir(): void
+    #[Test]
+    public function exibir(): void
     {
         $cliente = Cliente::factory()->create();
         $clienteEncontrado = app(ClienteService::class)->exibir($cliente);
@@ -29,7 +31,8 @@ class ExibirClienteTest extends TestCase
      * 
      * @return void
      */
-    public function testDeveFalharAoBuscarClienteQueNaoExiste(): void
+    #[Test]
+    public function deve_falhar_ao_buscar_cliente_que_nao_existe(): void
     {
         Cliente::query()->delete();
         $cliente = Cliente::first();
